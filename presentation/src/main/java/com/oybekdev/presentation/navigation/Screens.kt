@@ -1,8 +1,10 @@
 package com.oybekdev.presentation.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
+import com.oybekdev.presentation.screens.onboarding.OnboardingFragment
 import com.oybekdev.presentation.screens.phone.PhoneFragment
 
 object Screens {
-    fun Phone() = FragmentScreen{PhoneFragment()}
+    fun PhoneScreen() = FragmentScreen{PhoneFragment()}
+    fun OnboardingScreen() = FragmentScreen{ OnboardingFragment() }
 }

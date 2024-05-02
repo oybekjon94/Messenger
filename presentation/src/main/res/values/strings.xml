@@ -1,1 +1,5 @@
-<resources></resources>
+<resources>
+    <string name="app_name">WhatsUp</string>
+    <string name="app_namee">Messenger</string>
+    <string name="fragment_onboarding_continue">Continue</string>
+</resources>

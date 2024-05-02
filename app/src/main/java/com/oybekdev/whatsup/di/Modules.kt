@@ -17,6 +17,7 @@ import com.oybekdev.domain.usecase.auth.SendSmsCodeUseCase
 import com.oybekdev.domain.usecase.settings.GetOnboardedUseCase
 import com.oybekdev.domain.usecase.settings.OnboardedUseCase
 import com.oybekdev.presentation.screens.main.MainViewModel
+import com.oybekdev.presentation.screens.onboarding.OnboardingViewModel
 import com.oybekdev.presentation.screens.phone.PhoneViewModel
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
@@ -59,5 +60,6 @@ val remoteModule = module {
 
 val viewModelModule = module {
     viewModel{ PhoneViewModel(get()) }
-    viewModel{MainViewModel(get())}
+    viewModel{MainViewModel(get(),get())}
+    viewModel{OnboardingViewModel(get(), get())}
 }
