@@ -49,4 +49,7 @@ dependencies {
     //realm
     implementation 'io.realm.kotlin:library-base:1.11.0'
 
+    //firebase-auth
+    implementation'com.google.firebase:firebase-auth-ktx:22.3.1'
+
 }

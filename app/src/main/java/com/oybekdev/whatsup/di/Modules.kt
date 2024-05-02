@@ -14,6 +14,7 @@ import com.oybekdev.data.repo.SettingsRepositoryImpl
 import com.oybekdev.domain.repo.AuthRepository
 import com.oybekdev.domain.repo.SettingsRepository
 import com.oybekdev.domain.usecase.auth.SendSmsCodeUseCase
+import com.oybekdev.domain.usecase.auth.VerifyCodeUseCase
 import com.oybekdev.domain.usecase.settings.GetOnboardedUseCase
 import com.oybekdev.domain.usecase.settings.OnboardedUseCase
 import com.oybekdev.presentation.screens.main.MainViewModel
@@ -46,6 +47,7 @@ val useCaseModule = module {
     single { SendSmsCodeUseCase(get()) }
     single { OnboardedUseCase(get()) }
     single { GetOnboardedUseCase(get()) }
+    single { VerifyCodeUseCase(get()) }
 
 }
 
