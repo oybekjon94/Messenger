@@ -31,7 +31,7 @@ abstract class BaseFragment<VB:ViewBinding>(
         _binding =null
     }
 
-    fun <T : Any, R : Any> Observable<T>.observe(observer: (R) -> Unit, mapper: (PhoneViewModel.State) -> User?){
+    fun <T : Any, R : Any> Observable<T>.observe(observer: (R) -> Unit, mapper: (T) -> R){
         map(mapper).distinctUntilChanged().doOnNext(observer)
     }
 }
