@@ -2,4 +2,11 @@
     <string name="app_name">WhatsUp</string>
     <string name="app_namee">Messenger</string>
     <string name="fragment_onboarding_continue">Continue</string>
+    <string name="fragment_phone_sign_in">SIGN IN</string>
+    <string name="fragment_phone_hint">Phone number</string>
+    <string name="fragment_phone_number">Phone number</string>
+    <string name="fragment_phone_title">Sign in to your account</string>
+    <string name="fragment_code_title">Enter OTP Code</string>
+    <string name="fragment_code_verify">Verify</string>
+    <string name="fragment_code_invalid_otp">Invalid OTP code</string>
 </resources>

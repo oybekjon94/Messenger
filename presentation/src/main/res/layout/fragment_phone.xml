@@ -2,7 +2,79 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#555"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo"
+        android:src="@drawable/icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="64dp"
+        />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_namee"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="48sp"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"/>
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_phone_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/phoneText"
+        android:layout_marginBottom="32dp"
+        style="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_phone_hint"
+        app:layout_constraintStart_toStartOf="@id/phone"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toTopOf="@id/phone"
+        android:layout_marginBottom="8dp"
+        style="@style/TextAppearance.MaterialComponents.Subtitle2"/>
+
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/phone"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintBottom_toTopOf="@id/signIn"
+        android:layout_marginBottom="16dp"
+        android:paddingHorizontal="16dp"
+        android:drawablePadding="16dp"
+        android:background="@drawable/background_edit_text"
+        android:drawableStart="@drawable/ic_phone"
+        android:hint="@string/fragment_phone_hint"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signIn"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="32dp"
+        android:text="@string/fragment_phone_sign_in"
+        app:cornerRadius="32dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
