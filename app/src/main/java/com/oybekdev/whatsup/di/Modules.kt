@@ -8,6 +8,8 @@ import com.oybekdev.data.local.user.UserStorage
 import com.oybekdev.data.local.user.UserStorageImpl
 import com.oybekdev.data.remote.auth.AuthFirebase
 import com.oybekdev.data.remote.auth.AuthFirebaseImpl
+import com.oybekdev.data.remote.messages.MessagesFirestore
+import com.oybekdev.data.remote.messages.MessagesFirestoreImpl
 import com.oybekdev.data.remote.users.UsersFirestore
 import com.oybekdev.data.remote.users.UsersFirestoreImpl
 import com.oybekdev.data.repo.AuthRepositoryImpl
@@ -20,6 +22,8 @@ import com.oybekdev.domain.repo.SettingsRepository
 import com.oybekdev.domain.usecase.auth.SendSmsCodeUseCase
 import com.oybekdev.domain.usecase.auth.VerifyCodeUseCase
 import com.oybekdev.domain.usecase.chat.GetChatsUseCase
+import com.oybekdev.domain.usecase.chat.GetMessageUseCase
+import com.oybekdev.domain.usecase.chat.SendMessageUseCase
 import com.oybekdev.domain.usecase.settings.GetInitialScreenUseCase
 import com.oybekdev.domain.usecase.settings.OnboardedUseCase
 import com.oybekdev.presentation.screens.code.CodeViewModel
@@ -48,7 +52,7 @@ val appModule = module {
 val repositoryModule = module {
     single <AuthRepository> { AuthRepositoryImpl(get(), get()) }
     single <SettingsRepository> { SettingsRepositoryImpl(get())  }
-    single <ChatRepository> { CharRepositoryImpl(get())  }
+    single <ChatRepository> { CharRepositoryImpl(get(),get(),get())  }
 }
 
 val useCaseModule = module {
@@ -57,6 +61,8 @@ val useCaseModule = module {
     single { GetInitialScreenUseCase(get(),get()) }
     single { VerifyCodeUseCase(get()) }
     single { GetChatsUseCase(get()) }
+    single { GetMessageUseCase(get()) }
+    single { SendMessageUseCase(get()) }
 }
 
 val localModule = module {
@@ -67,6 +73,7 @@ val localModule = module {
 val remoteModule = module {
     single <AuthFirebase> { AuthFirebaseImpl(get()) }
     single <UsersFirestore> { UsersFirestoreImpl() }
+    single <MessagesFirestore> { MessagesFirestoreImpl() }
 
 }
 

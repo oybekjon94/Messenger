@@ -8,4 +8,5 @@ interface AuthFirebase {
     fun sendSmsCode(phone:String):Completable
     fun verify(code:String): Single<FirebaseUser>
     val isLoggedIn:Boolean
+    val userId:String?
 }
