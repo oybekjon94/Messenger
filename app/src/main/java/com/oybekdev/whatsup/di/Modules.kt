@@ -11,15 +11,19 @@ import com.oybekdev.data.remote.auth.AuthFirebaseImpl
 import com.oybekdev.data.remote.users.UsersFirestore
 import com.oybekdev.data.remote.users.UsersFirestoreImpl
 import com.oybekdev.data.repo.AuthRepositoryImpl
+import com.oybekdev.data.repo.CharRepositoryImpl
 import com.oybekdev.data.repo.SettingsRepositoryImpl
 import com.oybekdev.domain.model.ActivityHolder
 import com.oybekdev.domain.repo.AuthRepository
+import com.oybekdev.domain.repo.ChatRepository
 import com.oybekdev.domain.repo.SettingsRepository
 import com.oybekdev.domain.usecase.auth.SendSmsCodeUseCase
 import com.oybekdev.domain.usecase.auth.VerifyCodeUseCase
+import com.oybekdev.domain.usecase.chat.GetChatsUseCase
 import com.oybekdev.domain.usecase.settings.GetInitialScreenUseCase
 import com.oybekdev.domain.usecase.settings.OnboardedUseCase
 import com.oybekdev.presentation.screens.code.CodeViewModel
+import com.oybekdev.presentation.screens.home.HomeViewModel
 import com.oybekdev.presentation.screens.main.MainViewModel
 import com.oybekdev.presentation.screens.onboarding.OnboardingViewModel
 import com.oybekdev.presentation.screens.phone.PhoneViewModel
@@ -44,6 +48,7 @@ val appModule = module {
 val repositoryModule = module {
     single <AuthRepository> { AuthRepositoryImpl(get(), get()) }
     single <SettingsRepository> { SettingsRepositoryImpl(get())  }
+    single <ChatRepository> { CharRepositoryImpl(get())  }
 }
 
 val useCaseModule = module {
@@ -51,7 +56,7 @@ val useCaseModule = module {
     single { OnboardedUseCase(get()) }
     single { GetInitialScreenUseCase(get(),get()) }
     single { VerifyCodeUseCase(get()) }
-
+    single { GetChatsUseCase(get()) }
 }
 
 val localModule = module {
@@ -70,4 +75,5 @@ val viewModelModule = module {
     viewModel{MainViewModel(get(),get())}
     viewModel{OnboardingViewModel(get(), get())}
     viewModel{CodeViewModel(get(), get())}
+    viewModel{HomeViewModel( get())}
 }
