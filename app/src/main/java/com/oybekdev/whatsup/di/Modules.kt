@@ -8,6 +8,8 @@ import com.oybekdev.data.local.user.UserStorage
 import com.oybekdev.data.local.user.UserStorageImpl
 import com.oybekdev.data.remote.auth.AuthFirebase
 import com.oybekdev.data.remote.auth.AuthFirebaseImpl
+import com.oybekdev.data.remote.users.UsersFirestore
+import com.oybekdev.data.remote.users.UsersFirestoreImpl
 import com.oybekdev.data.repo.AuthRepositoryImpl
 import com.oybekdev.data.repo.SettingsRepositoryImpl
 import com.oybekdev.domain.model.ActivityHolder
@@ -40,7 +42,7 @@ val appModule = module {
 }
 
 val repositoryModule = module {
-    single <AuthRepository> { AuthRepositoryImpl(get()) }
+    single <AuthRepository> { AuthRepositoryImpl(get(), get()) }
     single <SettingsRepository> { SettingsRepositoryImpl(get())  }
 }
 
@@ -59,6 +61,8 @@ val localModule = module {
 
 val remoteModule = module {
     single <AuthFirebase> { AuthFirebaseImpl(get()) }
+    single <UsersFirestore> { UsersFirestoreImpl() }
+
 }
 
 val viewModelModule = module {

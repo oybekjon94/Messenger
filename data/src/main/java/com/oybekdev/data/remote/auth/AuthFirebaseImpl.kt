@@ -4,6 +4,7 @@ import android.app.Activity
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
@@ -12,6 +13,7 @@ import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCall
 import com.oybekdev.domain.model.ActivityHolder
 import com.oybekdev.domain.model.InvalidCredentialsException
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import java.util.concurrent.TimeUnit
 
 class AuthFirebaseImpl(
@@ -49,12 +51,12 @@ class AuthFirebaseImpl(
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    override fun verify(code: String): Completable =Completable.create {
+    override fun verify(code: String): Single<FirebaseUser> = Single.create {
         val credential = PhoneAuthProvider.getCredential(verificationId, code)
         auth.signInWithCredential(credential)
             .addOnCompleteListener() { task ->
-                if (task.isSuccessful) {
-                    it.onComplete()
+                if (task.isSuccessful && isLoggedIn) {
+                    it.onSuccess(auth.currentUser!!)
                 } else {
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         it.onError(InvalidCredentialsException())
