@@ -9,4 +9,7 @@
     <string name="fragment_code_title">Enter OTP Code</string>
     <string name="fragment_code_verify">Verify</string>
     <string name="fragment_code_invalid_otp">Invalid OTP code</string>
+    <string name="phone_error">Error sending code</string>
+    <string name="fragment_code_sent_to">Code has been sent to %s</string>
+    <string name="code_error">Error verifying code</string>
 </resources>

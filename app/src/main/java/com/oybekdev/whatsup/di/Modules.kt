@@ -11,12 +11,14 @@ import com.oybekdev.data.remote.auth.AuthFirebase
 import com.oybekdev.data.remote.auth.AuthFirebaseImpl
 import com.oybekdev.data.repo.AuthRepositoryImpl
 import com.oybekdev.data.repo.SettingsRepositoryImpl
+import com.oybekdev.domain.model.ActivityHolder
 import com.oybekdev.domain.repo.AuthRepository
 import com.oybekdev.domain.repo.SettingsRepository
 import com.oybekdev.domain.usecase.auth.SendSmsCodeUseCase
 import com.oybekdev.domain.usecase.auth.VerifyCodeUseCase
 import com.oybekdev.domain.usecase.settings.GetOnboardedUseCase
 import com.oybekdev.domain.usecase.settings.OnboardedUseCase
+import com.oybekdev.presentation.screens.code.CodeViewModel
 import com.oybekdev.presentation.screens.main.MainViewModel
 import com.oybekdev.presentation.screens.onboarding.OnboardingViewModel
 import com.oybekdev.presentation.screens.phone.PhoneViewModel
@@ -36,6 +38,7 @@ val appModule = module {
     single { cicerone.router }
     single { cicerone.getNavigatorHolder() }
     single { Realm.open(config) }
+    single { ActivityHolder() }
 }
 
 val repositoryModule = module {
@@ -57,11 +60,12 @@ val localModule = module {
 }
 
 val remoteModule = module {
-    single <AuthFirebase> { AuthFirebaseImpl() }
+    single <AuthFirebase> { AuthFirebaseImpl(get()) }
 }
 
 val viewModelModule = module {
-    viewModel{ PhoneViewModel(get()) }
+    viewModel{ PhoneViewModel(get(),get()) }
     viewModel{MainViewModel(get(),get())}
     viewModel{OnboardingViewModel(get(), get())}
+    viewModel{CodeViewModel(get(), get())}
 }

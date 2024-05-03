@@ -14,10 +14,11 @@
         android:layout_margin="32dp"/>
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
-        android:text="Code has been sent to %s"
+        android:text="@string/fragment_code_sent_to"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/otp"
@@ -49,7 +50,7 @@
         app:width="40dp"
         app:bar_enabled="true"
         app:bar_height="2dp"
-        app:length="5"
+        app:length="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +58,7 @@
         app:otp_text_size="24dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signIn"
+        android:id="@+id/verify"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginHorizontal="32dp"
