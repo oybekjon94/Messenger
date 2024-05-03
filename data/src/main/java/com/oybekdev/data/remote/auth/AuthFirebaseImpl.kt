@@ -64,5 +64,8 @@ class AuthFirebaseImpl(
             }
     }
 
+    override val isLoggedIn: Boolean
+        get() = auth.currentUser != null
+
 
 }

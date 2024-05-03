@@ -16,4 +16,7 @@ class AuthRepositoryImpl constructor(
     override fun verify(code: String): Completable = authFirebase.verify(code)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+
+    override val isLoggedIn: Boolean
+        get() = authFirebase.isLoggedIn
 }

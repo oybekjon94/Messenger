@@ -2,14 +2,16 @@ package com.oybekdev.presentation.screens.main
 
 import android.annotation.SuppressLint
 import com.github.terrakok.cicerone.Router
-import com.oybekdev.domain.usecase.settings.GetOnboardedUseCase
+import com.oybekdev.domain.usecase.settings.GetInitialScreenUseCase
+import com.oybekdev.domain.usecase.settings.GetInitialScreenUseCase.Result
 import com.oybekdev.presentation.base.BaseViewModel
+import com.oybekdev.presentation.navigation.Screens.HomeScreen
 import com.oybekdev.presentation.navigation.Screens.OnboardingScreen
 import com.oybekdev.presentation.navigation.Screens.PhoneScreen
 import com.oybekdev.presentation.screens.main.MainViewModel.*
 
 class MainViewModel(
-    private val getOnboardedUseCase: GetOnboardedUseCase,
+    private val getInitialScreenUseCase: GetInitialScreenUseCase,
     private val router: Router
 ) :BaseViewModel<State, Input,Effect>(){
 
@@ -31,10 +33,13 @@ class MainViewModel(
 
     @SuppressLint("CheckResult")
     private fun getOnboarded(){
-        getOnboardedUseCase().subscribe{ onboarded ->
-            router.newRootScreen(
-                if (onboarded) PhoneScreen() else OnboardingScreen()
-            )
+        getInitialScreenUseCase().subscribe{ result ->
+            val screen = when(result){
+                Result.Home -> HomeScreen()
+                Result.Onboarding -> OnboardingScreen()
+                Result.Phone -> PhoneScreen()
+            }
+            router.replaceScreen(screen)
         }
     }
 }

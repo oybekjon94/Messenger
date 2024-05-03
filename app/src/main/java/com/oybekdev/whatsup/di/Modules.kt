@@ -1,6 +1,5 @@
 package com.oybekdev.whatsup.di
 
-import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.github.terrakok.cicerone.Cicerone
 import com.oybekdev.data.local.settings.SettingsRealm
 import com.oybekdev.data.local.settings.SettingsStorage
@@ -16,7 +15,7 @@ import com.oybekdev.domain.repo.AuthRepository
 import com.oybekdev.domain.repo.SettingsRepository
 import com.oybekdev.domain.usecase.auth.SendSmsCodeUseCase
 import com.oybekdev.domain.usecase.auth.VerifyCodeUseCase
-import com.oybekdev.domain.usecase.settings.GetOnboardedUseCase
+import com.oybekdev.domain.usecase.settings.GetInitialScreenUseCase
 import com.oybekdev.domain.usecase.settings.OnboardedUseCase
 import com.oybekdev.presentation.screens.code.CodeViewModel
 import com.oybekdev.presentation.screens.main.MainViewModel
@@ -25,7 +24,6 @@ import com.oybekdev.presentation.screens.phone.PhoneViewModel
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.scope.get
 import org.koin.dsl.module
 
 private val cicerone = Cicerone.create()
@@ -49,7 +47,7 @@ val repositoryModule = module {
 val useCaseModule = module {
     single { SendSmsCodeUseCase(get()) }
     single { OnboardedUseCase(get()) }
-    single { GetOnboardedUseCase(get()) }
+    single { GetInitialScreenUseCase(get(),get()) }
     single { VerifyCodeUseCase(get()) }
 
 }
