@@ -21,8 +21,7 @@ class MessagesFirestoreImpl:MessagesFirestore {
             id = UUID.randomUUID().toString(),
             message = message,
             time = Date(),
-            members = listOf(fromUserId, toUserId),
-            count = 2,
+            members = listOf(fromUserId, toUserId).sorted().joinToString(),
             from = fromUserId
         )
         messages.document(messageDocument.id!!).set(messageDocument).addOnFailureListener{
@@ -38,9 +37,7 @@ class MessagesFirestoreImpl:MessagesFirestore {
         secondUserId: String,
     ): Observable<List<MessageDocument>> = Observable.create{ emitter ->
         messages
-            .whereEqualTo("count",2)
-            .whereArrayContains("members",firstUserId)
-            .whereArrayContains("members",secondUserId)
+            .whereEqualTo("members", listOf(firstUserId,secondUserId).sorted().joinToString())
             .addSnapshotListener{snapshot, e ->
                 if (e != null){
                     emitter.onError(e)
@@ -52,7 +49,7 @@ class MessagesFirestoreImpl:MessagesFirestore {
                 }
                 val messageDocuments = snapshot.documents.mapNotNull {
                     it.toObject(MessageDocument::class.java)
-                }
+                }.sortedBy { it.time }
                 emitter.onNext(messageDocuments)
             }
 

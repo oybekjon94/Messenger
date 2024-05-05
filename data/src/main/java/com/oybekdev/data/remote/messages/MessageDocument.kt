@@ -8,7 +8,7 @@ data class MessageDocument(
     var message:String? = null,
     @ServerTimestamp
     var time: Date? = null,
-    var members:List<String>? = null,
+    var members:String? = null,
     var count:Int? = null,
     val from:String? = null
 )

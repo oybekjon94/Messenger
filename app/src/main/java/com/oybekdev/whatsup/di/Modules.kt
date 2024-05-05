@@ -26,6 +26,7 @@ import com.oybekdev.domain.usecase.chat.GetMessageUseCase
 import com.oybekdev.domain.usecase.chat.SendMessageUseCase
 import com.oybekdev.domain.usecase.settings.GetInitialScreenUseCase
 import com.oybekdev.domain.usecase.settings.OnboardedUseCase
+import com.oybekdev.presentation.screens.chat.ChatViewModel
 import com.oybekdev.presentation.screens.code.CodeViewModel
 import com.oybekdev.presentation.screens.home.HomeViewModel
 import com.oybekdev.presentation.screens.main.MainViewModel
@@ -82,5 +83,6 @@ val viewModelModule = module {
     viewModel{MainViewModel(get(),get())}
     viewModel{OnboardingViewModel(get(), get())}
     viewModel{CodeViewModel(get(), get())}
-    viewModel{HomeViewModel( get())}
+    viewModel{HomeViewModel( get(),get())}
+    viewModel{ChatViewModel(get(),get())}
 }
