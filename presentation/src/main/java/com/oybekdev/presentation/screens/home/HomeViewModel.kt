@@ -54,5 +54,5 @@ class HomeViewModel(
         }
         .doFinally{
             updateState { it.copy(loading = false) }
-        }.subscribe()
+        }.subscribe({},{})
 }

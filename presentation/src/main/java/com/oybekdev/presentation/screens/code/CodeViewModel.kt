@@ -34,5 +34,5 @@ class CodeViewModel(
                 emitEffect(Effect.Error)
             }.doOnComplete{
                 router.replaceScreen(HomeScreen())
-            }.subscribe()
+            }.subscribe({},{})
 }

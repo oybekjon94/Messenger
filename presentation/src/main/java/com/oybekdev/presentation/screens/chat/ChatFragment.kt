@@ -2,6 +2,7 @@ package com.oybekdev.presentation.screens.chat
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import com.oybekdev.domain.model.Chat
 import com.oybekdev.domain.model.Message
 import com.oybekdev.presentation.base.BaseFragment
@@ -39,6 +40,14 @@ class ChatFragment(
            viewModel.processInput(SendMessage(message.text.toString()))
            message.text = null
        }
+
+        gallery.setOnClickListener{
+            galleryLauncher.launch("image/*")
+        }
         messages.adapter = adapter
+    }
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()){
+        it ?: return@registerForActivityResult
+        viewModel.processInput(Input.SendImage(it))
     }
 }
