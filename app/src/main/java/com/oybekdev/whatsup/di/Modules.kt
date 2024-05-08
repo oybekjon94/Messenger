@@ -8,6 +8,8 @@ import com.oybekdev.data.local.user.UserStorage
 import com.oybekdev.data.local.user.UserStorageImpl
 import com.oybekdev.data.remote.auth.AuthFirebase
 import com.oybekdev.data.remote.auth.AuthFirebaseImpl
+import com.oybekdev.data.remote.files.ImagesStorage
+import com.oybekdev.data.remote.files.ImagesStorageImpl
 import com.oybekdev.data.remote.messages.MessagesFirestore
 import com.oybekdev.data.remote.messages.MessagesFirestoreImpl
 import com.oybekdev.data.remote.users.UsersFirestore
@@ -23,6 +25,7 @@ import com.oybekdev.domain.usecase.auth.SendSmsCodeUseCase
 import com.oybekdev.domain.usecase.auth.VerifyCodeUseCase
 import com.oybekdev.domain.usecase.chat.GetChatsUseCase
 import com.oybekdev.domain.usecase.chat.GetMessageUseCase
+import com.oybekdev.domain.usecase.chat.SendImageUseCase
 import com.oybekdev.domain.usecase.chat.SendMessageUseCase
 import com.oybekdev.domain.usecase.settings.GetInitialScreenUseCase
 import com.oybekdev.domain.usecase.settings.OnboardedUseCase
@@ -53,7 +56,7 @@ val appModule = module {
 val repositoryModule = module {
     single <AuthRepository> { AuthRepositoryImpl(get(), get()) }
     single <SettingsRepository> { SettingsRepositoryImpl(get())  }
-    single <ChatRepository> { CharRepositoryImpl(get(),get(),get())  }
+    single <ChatRepository> { CharRepositoryImpl(get(),get(),get(),get())  }
 }
 
 val useCaseModule = module {
@@ -64,6 +67,7 @@ val useCaseModule = module {
     single { GetChatsUseCase(get()) }
     single { GetMessageUseCase(get()) }
     single { SendMessageUseCase(get()) }
+    single { SendImageUseCase(get()) }
 }
 
 val localModule = module {
@@ -75,7 +79,7 @@ val remoteModule = module {
     single <AuthFirebase> { AuthFirebaseImpl(get()) }
     single <UsersFirestore> { UsersFirestoreImpl() }
     single <MessagesFirestore> { MessagesFirestoreImpl() }
-
+    single <ImagesStorage> { ImagesStorageImpl() }
 }
 
 val viewModelModule = module {
@@ -84,5 +88,5 @@ val viewModelModule = module {
     viewModel{OnboardingViewModel(get(), get())}
     viewModel{CodeViewModel(get(), get())}
     viewModel{HomeViewModel( get(),get())}
-    viewModel{ChatViewModel(get(),get())}
+    viewModel{ChatViewModel(get(),get(),get())}
 }

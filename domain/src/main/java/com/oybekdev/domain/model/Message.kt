@@ -8,8 +8,8 @@ data class Message(
     var message:String? = null,
     var time: Date,
     val type:Type,
-    val imageUri: Uri? = null
+    val image: Uri? = null
 )
 enum class Type{
-    text_in, text_out, image_upload
+    text_in, text_out, image_upload,image_in, image_out
 }

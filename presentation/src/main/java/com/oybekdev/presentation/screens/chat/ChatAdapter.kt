@@ -1,22 +1,18 @@
 package com.oybekdev.presentation.screens.chat
 
-import android.media.RouteListingPreference.Item
-import android.text.Layout
 import android.view.LayoutInflater
-import android.view.RoundedCorner
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.oybekdev.domain.model.Message
 import com.oybekdev.domain.model.Type
+import com.oybekdev.presentation.databinding.ItemImageInChatBinding
+import com.oybekdev.presentation.databinding.ItemImageOutChatBinding
 import com.oybekdev.presentation.databinding.ItemImageUploadChatBinding
 import com.oybekdev.presentation.databinding.ItemTextInChatBinding
 import com.oybekdev.presentation.databinding.ItemTextOutChatBinding
-import com.oybekdev.presentation.util.dp
 
 class ChatAdapter : ListAdapter<Message, RecyclerView.ViewHolder>(DIFF_UTIL) {
 
@@ -37,7 +33,19 @@ class ChatAdapter : ListAdapter<Message, RecyclerView.ViewHolder>(DIFF_UTIL) {
     inner class ImageUploadHolder(private val binding: ItemImageUploadChatBinding) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(message:Message) = with(binding){
-                Glide.with(root).load(message.imageUri).into(image)
+                Glide.with(root).load(message.image).into(image)
+            }
+    }
+    inner class ImageInHolder(private val binding: ItemImageInChatBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+            fun bind(message:Message) = with(binding){
+                Glide.with(root).load(message.image).into(image)
+            }
+    }
+    inner class ImageOutHolder(private val binding: ItemImageOutChatBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+            fun bind(message:Message) = with(binding){
+                Glide.with(root).load(message.image).into(image)
             }
     }
 
@@ -68,6 +76,14 @@ class ChatAdapter : ListAdapter<Message, RecyclerView.ViewHolder>(DIFF_UTIL) {
             Type.image_upload -> ImageUploadHolder(
                 ItemImageUploadChatBinding.inflate(inflater,parent,false)
             )
+
+            Type.image_out -> ImageOutHolder(
+                ItemImageOutChatBinding.inflate(inflater,parent,false)
+            )
+
+            Type.image_in -> ImageInHolder(
+                ItemImageInChatBinding.inflate(inflater,parent,false)
+            )
         }
     }
 
@@ -76,6 +92,8 @@ class ChatAdapter : ListAdapter<Message, RecyclerView.ViewHolder>(DIFF_UTIL) {
             is TextInViewHolder -> holder.bind(getItem(position))
             is TextOutViewHolder -> holder.bind(getItem(position))
             is ImageUploadHolder -> holder.bind(getItem(position))
+            is ImageInHolder -> holder.bind(getItem(position))
+            is ImageOutHolder-> holder.bind(getItem(position))
         }
     }
 

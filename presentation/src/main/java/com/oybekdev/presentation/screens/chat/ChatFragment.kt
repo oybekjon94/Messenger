@@ -48,6 +48,7 @@ class ChatFragment(
     }
     private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()){
         it ?: return@registerForActivityResult
-        viewModel.processInput(Input.SendImage(it))
+        val stream = requireActivity().contentResolver.openInputStream(it) ?:return@registerForActivityResult
+        viewModel.processInput(Input.SendImage(it,stream))
     }
 }
