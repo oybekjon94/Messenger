@@ -10,7 +10,7 @@ import java.io.InputStream
 
 interface ChatRepository {
     fun getChats(): Single<List<Chat>>
-    fun sendMessage(to:String, message:String):Completable
-    fun sendMessage(to:String, image:InputStream):Completable
+    fun sendMessage(to:User, message:String):Completable
+    fun sendMessage(to:User, image:InputStream):Completable
     fun getMessages(with:String):Observable<List<Message>>
 }

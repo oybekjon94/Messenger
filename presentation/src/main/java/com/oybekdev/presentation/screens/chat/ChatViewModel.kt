@@ -53,7 +53,7 @@ class ChatViewModel(
         messages.add(message)
         updateState { it.copy(messages = messages) }
 
-        sendImageUseCase(current.chat!!.user.id, stream)
+        sendImageUseCase(current.chat!!.user, stream)
             .doOnError{
                 emitEffect(Effect.ErrorSending)
             }.subscribe({},{})
@@ -64,7 +64,7 @@ class ChatViewModel(
         getMessages()
     }
 
-    private fun sendMessage(message: String) = sendMessageUseCase(current.chat!!.user.id, message)
+    private fun sendMessage(message: String) = sendMessageUseCase(current.chat!!.user, message)
         .doOnError{
             emitEffect(Effect.ErrorSending)
         }.subscribe({},{})

@@ -1,5 +1,6 @@
 package com.oybekdev.whatsup.di
 
+import com.android.volley.toolbox.Volley
 import com.github.terrakok.cicerone.Cicerone
 import com.oybekdev.data.local.settings.SettingsRealm
 import com.oybekdev.data.local.settings.SettingsStorage
@@ -12,6 +13,8 @@ import com.oybekdev.data.remote.files.ImagesStorage
 import com.oybekdev.data.remote.files.ImagesStorageImpl
 import com.oybekdev.data.remote.messages.MessagesFirestore
 import com.oybekdev.data.remote.messages.MessagesFirestoreImpl
+import com.oybekdev.data.remote.push.PushVolley
+import com.oybekdev.data.remote.push.PushVolleyImpl
 import com.oybekdev.data.remote.users.UsersFirestore
 import com.oybekdev.data.remote.users.UsersFirestoreImpl
 import com.oybekdev.data.repo.AuthRepositoryImpl
@@ -37,6 +40,7 @@ import com.oybekdev.presentation.screens.onboarding.OnboardingViewModel
 import com.oybekdev.presentation.screens.phone.PhoneViewModel
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -51,12 +55,13 @@ val appModule = module {
     single { cicerone.getNavigatorHolder() }
     single { Realm.open(config) }
     single { ActivityHolder() }
+    single {Volley.newRequestQueue(androidContext())}
 }
 
 val repositoryModule = module {
     single <AuthRepository> { AuthRepositoryImpl(get(), get()) }
     single <SettingsRepository> { SettingsRepositoryImpl(get())  }
-    single <ChatRepository> { CharRepositoryImpl(get(),get(),get(),get())  }
+    single <ChatRepository> { CharRepositoryImpl(get(),get(),get(),get(),get())  }
 }
 
 val useCaseModule = module {
@@ -80,6 +85,7 @@ val remoteModule = module {
     single <UsersFirestore> { UsersFirestoreImpl() }
     single <MessagesFirestore> { MessagesFirestoreImpl() }
     single <ImagesStorage> { ImagesStorageImpl() }
+    single <PushVolley> { PushVolleyImpl(get()) }
 }
 
 val viewModelModule = module {

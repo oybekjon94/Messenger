@@ -5,9 +5,11 @@ import com.oybekdev.data.mapper.toUser
 import com.oybekdev.data.remote.auth.AuthFirebase
 import com.oybekdev.data.remote.files.ImagesStorage
 import com.oybekdev.data.remote.messages.MessagesFirestore
+import com.oybekdev.data.remote.push.PushVolley
 import com.oybekdev.data.remote.users.UsersFirestore
 import com.oybekdev.domain.model.Chat
 import com.oybekdev.domain.model.Message
+import com.oybekdev.domain.model.User
 import com.oybekdev.domain.repo.ChatRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
@@ -21,6 +23,7 @@ class CharRepositoryImpl(
     private val messagesFirestore: MessagesFirestore,
     private val authFirebase: AuthFirebase,
     private val imagesStorage: ImagesStorage,
+    private val pushVolley:PushVolley
 ) : ChatRepository {
     override fun getChats(): Single<List<Chat>> = usersFirestore.getUsers().map { users ->
         users.mapNotNull { user ->
@@ -30,15 +33,17 @@ class CharRepositoryImpl(
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
 
-    override fun sendMessage(to: String, message: String): Completable =
-        messagesFirestore.sendMessaage(authFirebase.userId!!, to, message)
+    override fun sendMessage(to: User, message: String): Completable =
+        messagesFirestore.sendMessaage(authFirebase.userId!!, to.id, message).andThen(
+            pushVolley.push(to.token, "New message",message)
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    override fun sendMessage(to: String, image: InputStream): Completable =
+    override fun sendMessage(to: User, image: InputStream): Completable =
         imagesStorage.upload(image).flatMapCompletable {
-            messagesFirestore.sendMessaage(authFirebase.userId!!, to, it)
-        }
+            messagesFirestore.sendMessaage(authFirebase.userId!!, to.id, it)
+        }.andThen(pushVolley.push(to.token, "New message","[Image]"))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 

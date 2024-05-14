@@ -5,4 +5,5 @@ data class UserDocument(
     val phone:String? = null,
     val name:String? = null,
     val avatar:String? = null,
+    val token:String? = null
 )
